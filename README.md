@@ -1,5 +1,5 @@
 By Susan Potters and Sjoerd Dijkstra.
-Link to code: https://github.com/SusanPotters/DL_PSMNet-.
+[Link to code](https://github.com/SusanPotters/DL_PSMNet-).
 
 # Introduction
 As a part of the course CS4240 Deep Learning it was mandated that a project is conducted. The project was to consist of a reproducibility of one of a pre-determined list of papers on deep learning. One such paper was that  of `Pyramid Stereo Matching Network' by Jia-Ren Chang and Yong-Sheng Chen [1]. We chose to conduct this reproduction on the results as obtained by the paper and  extend work towards the use of such a result on an external dataset for application. 
@@ -20,6 +20,20 @@ In order to get a better understanding of the significance of the achieved resul
 The first main change was made towards the standard large filters (7 x 7) design for the first convolution layer as done by other studies. Instead the writers opted for three smaller convolution layers (3 x 3) to be cascaded to construct a deeper network, however, with the same receptive field.
 The second change was made towards the four basic residual blocks for learning unary feature extraction. Two of these basic residual blocks were transformed to conduct dilated convolution in order to enlarge the receptive field.
 Then the model consisted of using an output feature map of a quarter of the size of the original input imaging and thus a sixteenth of the area. This input is then sent through the spatial pyramid pooling module (SPP) for context information. The feature maps of the left and right images are then concatenated into a cost volume. Using this cost volume, 3D CNN regularisation is performed to finally use regression to calculate the output disparity map.
+
+## Spatial Pyramid Spooling Module
+Just using the pixel intensities of images results in a loss of context relationships. As such an spatial pyramid pooling module is used to learn and thus use the relationships between the main regions that are objects and the sub-regions of that object in a hierarchical manner. One can think of the relationship between a car as the object and its wheels as a potential sub-region for that object. 
+In the model provided four fixed-size average pooling blocks were used for SPP as can be seen from Figure 1. Furthermore, 1 x 1 convolution and upsampling are performed as done in previous works [2]. 
+
+## Cost Volume
+For the cost volume a similar approach as GC-Net is performed to concatenate the left and right features to learn matching cost estimation using a deep network. They follow the approach as done by [2]. For each stereo image a cost volume is represented in four dimensions: height, width, max disparity + 1 and feature size. This is calculated through concatenation of unary features through their left and right stereo image representations across each disparity level. 
+
+## 3D CNN
+The use of a custom stacked hourglass architecture allows the model to learn more context information through the repeated top-down/bottom-up processing with the presence of intermediate supervision. The architecture consists of three of these hourglass structures each of which produce their own disparity map with corresponding losses. During the training phase, the total loss is represented by the weighted sum of these losses. During testing, the final disparity map is the last of the three outputs. 
+
+## Disparity Regression
+
+To be able to be fully differentiable and regress a smooth disparity estimate, the paper makes use of disparity regression from [2]. This regression converts the predicted costs for each disparity from the cost volume to a probability volume by means of a softmax operation. 
 
 # Models
 The code for this project can be found at: https://github.com/SusanPotters/DL_PSMNet-.
