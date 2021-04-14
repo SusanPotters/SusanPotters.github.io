@@ -72,9 +72,9 @@ The average EPE of the self-trained Monkaa model on the Scene Flow test set was 
 
 In this section we provide the reader with multiple images of the disparity outputs and EPE for the three models, as well as the actual disparity image.
 
-![DLRP6](https://user-images.githubusercontent.com/61514183/114726368-a151f180-9d3d-11eb-987e-7f0b7dfad29a.png)
-![DLRP8 (1)](https://user-images.githubusercontent.com/61514183/114726370-a31bb500-9d3d-11eb-8761-d8a1649244e8.png)
-![DLRP5](https://user-images.githubusercontent.com/61514183/114726378-a44ce200-9d3d-11eb-960d-00701ed7d9a4.png)
+![first](https://user-images.githubusercontent.com/61514183/114728030-03f7bd00-9d3f-11eb-95dc-9a5ad2afa8f2.PNG)
+![second](https://user-images.githubusercontent.com/61514183/114728039-0528ea00-9d3f-11eb-9889-9c3594ea862e.PNG)
+![third](https://user-images.githubusercontent.com/61514183/114728047-0823da80-9d3f-11eb-9602-88f30da7e5b9.PNG)
 
 It can be seen that the self-trained Scene Flow model performs best ifor all disparity images, obtaining an EPE below 1.0 for all cases. The pre-trained and Monkaa model obtain a relatively similar EPE. In addition, we can identify what points the models struggle with. For example, the Monkaa model seems to have difficulty with recognizing detailed shapes of objects, but predicts correct disparity values mostly for the objects that it does recognize. The pre-trained model is better at recognizing shapes of detailed objects, but does not predict correct disparity values. Lastly, the Scene Flow model is able to discern the shapes of objects and predict disparity values well. There are minimal differences when comparing it with the true disparity image.
 
